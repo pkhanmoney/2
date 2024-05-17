@@ -1,0 +1,101 @@
+# loading packages 
+library(tidyverse)
+
+#QUESTION 1
+
+#imported data into R
+
+#changing the name of the data
+dataset <- DA2_q1
+
+#creating scatterplot to visualize how different levels of 
+#introspection predict different levels of optimism
+ggplot(dataset, aes(x = Introspection, y = Optimism)) +
+  geom_point() +
+  labs(title = "Impact of Introspection on Optimism",
+       x = "Introspection",
+       y = "Optimism") +
+  theme_classic() 
+
+#computing mean and SD for introspection and optimism 
+
+mean_introspection <- mean(dataset$Introspection)
+sd_introspection <- sd(dataset$Introspection)
+mean_optimism <- mean(dataset$Optimism)
+sd_optimism <- sd(dataset$Optimism)
+
+#printing the means and SDs
+mean_introspection 
+sd_introspection 
+mean_optimism 
+sd_optimism 
+
+#computing pearson's correlation between introspection and optimism 
+cor(dataset$Introspection, dataset$Optimism, method=c("pearson"))
+
+#interpretting the data
+#what does this correlation suggest? Strength and direction?
+#A 0.1683 correlation suggests a weak and positive relationship between 
+#introspection and optimism. 
+#introspection does not seem like a strong predictor of optimism according to this data
+
+#QUESTION 2
+
+#imported new data into R
+
+#changing the name of the data
+dataset2 <- DA2_q2
+
+#1. computing pearson's correlation between organizational self rating and friends
+cor(dataset2$org, dataset2$friends, method=c("pearson"))
+
+#interpretting the data
+#2. what does this correlation suggest? Strength and direction?
+#A -0.1536 correlation suggests a weak and negative relationship between 
+#the partipant's organizational self rating and the number of friends they have
+#organizational self rating does not seem like a strong predictor of number of friends
+#according to this data
+
+#3. creating two new variables that relist org and friends in rank order
+dataset2$org_ranked <-rank(dataset2$org) 
+dataset2$friends_ranked <-rank(dataset2$friends) 
+
+
+#4. What do you anticipate about a Spearman’s correlation analysis? 
+#Do you think it will be similar or different to Pearson correlation?
+#i think both correlations with be similar. spearman's correlation is non-parametric
+#so is less sensitive to outliers and captures non-linear relationships because 
+#the data is pretty linear and there aren't any extreme outliers i assume that 
+#the spearman's correlation will also be weak and negative
+
+#5. caluculated spearman's correlation using ranked variables: -0.1607143
+cor(dataset2$org_ranked, dataset2$friends_ranked)
+
+#caluculated spearman's correlation using original variables: 
+cor(dataset2$org, dataset2$friends, method = "spearman")
+
+#Are the two values the same? Why do you get the same number? 
+#the two variables are the same. we get the same number because both 
+#functions are running the same test. the first one we chose to rank 
+#the variables ourselves, whereas in the second code, R did it for us
+
+#6. How does our spearman's correlation compare to our pearson's?
+#both correlations are weak and negative.Spearman's correlation may offer a more insight
+#because it considers ranks, making it less sensitive to outliers and non-linear patterns
+
+#7. creating a scatter plot of the data
+ggplot(dataset2, aes(x = org, y = friends)) +
+  geom_point() +
+  labs(title = "Impact of Organizational Self Rating on Number of Friends",
+       x = "Organizational Self Rating",
+       y = "Friends") +
+  theme_classic() 
+
+#the plot shows a very weak correlation. the points on the plot do not seem to
+#have a strong pattern. they are scattered about. there does seem to be a small 
+#negative association too because the points seem to be ascending from the left side 
+#of the plot. it is barely noticeable though 
+
+#QUESTION 3
+
+
